@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Día del Padre — Para mi Papito Vito</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Lora:ital,wght@0,400;0,600;1,400&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          gold:      '#c9a227',
+          'gold-lt': '#f0d060',
+          'gold-dk': '#8a6d10',
+          cream:     '#fdf8ee',
+          'warm-br': '#3b2507',
+          'soft-br': '#7a5230',
+          'bg-dark': '#1a0f02',
+        },
+        fontFamily: {
+          playfair: ['"Playfair Display"', 'serif'],
+          lora:     ['Lora', 'serif'],
+          dancing:  ['"Dancing Script"', 'cursive'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { overflow-x: hidden; }
+
+  /* hero glow */
+  .hero-bg {
+    background: radial-gradient(ellipse at 50% 60%, #3b1f00 0%, #1a0f02 70%);
+  }
+  .hero-bg::before {
+    content:''; position:absolute; inset:0;
+    background: radial-gradient(circle at 20% 20%, rgba(201,162,39,.13) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(201,162,39,.10) 0%, transparent 50%);
+    pointer-events:none;
+  }
+
+  /* stars */
+  .star {
+    position:absolute; background:#f0d060; border-radius:50%;
+    animation: twinkle var(--d,3s) ease-in-out infinite alternate;
+    animation-delay: var(--delay,0s);
+  }
+  @keyframes twinkle {
+    from { opacity:.2; transform:scale(.8); }
+    to   { opacity:.9; transform:scale(1.2); }
+  }
+
+  /* hero anims */
+  @keyframes fadeDown { from{opacity:0;transform:translateY(-22px)} to{opacity:1;transform:translateY(0)} }
+  .fd0{animation:fadeDown .8s ease both}
+  .fd1{animation:fadeDown 1s .1s ease both}
+  .fd2{animation:fadeDown 1s .25s ease both}
+  .fd3{animation:fadeDown 1s .4s ease both}
+  .fd4{animation:fadeDown 1s .55s ease both}
+
+  @keyframes pulseHeart { 0%,100%{transform:scale(1)} 50%{transform:scale(1.2)} }
+  .pulse-heart { animation: pulseHeart 2s 1.5s ease-in-out infinite; }
+
+  @keyframes bounceDown { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(9px)} }
+  .bounce-hint { animation: bounceDown 2s ease-in-out infinite; }
+
+  /* carousel */
+  .carousel-track { display:flex; transition:transform .6s cubic-bezier(.4,0,.2,1); }
+  .carousel-slide  { min-width:100%; position:relative; max-height:900px; height:min(80vh,900px); background:#000; }
+  .carousel-slide img { width:100%; height:100%; object-fit:contain !important; object-position:center; filter:brightness(1.05) contrast(1.08); background:#000; }
+
+  /* msg card hover */
+  .msg-card { transition:transform .35s, box-shadow .35s; }
+  .msg-card:hover {
+    transform:translateY(-8px) scale(1.015);
+    box-shadow:0 22px 50px rgba(201,162,39,.16), 0 10px 30px rgba(0,0,0,.4);
+  }
+
+  /* scroll reveal */
+  .reveal { opacity:0; transform:translateY(38px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  /* letter paper lines */
+  .letter-paper {
+    background: #fdf8ee;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent, transparent 31px,
+      rgba(201,162,39,.13) 31px, rgba(201,162,39,.13) 32px
+    );
+  }
+  /* torn top */
+  .letter-paper::before {
+    content:''; position:absolute; top:-15px; left:0; right:0; height:15px;
+    background:#fdf8ee;
+    clip-path:polygon(0 100%,2% 30%,5% 90%,8% 10%,11% 80%,14% 20%,17% 85%,20% 15%,23% 75%,26% 5%,29% 70%,32% 0%,35% 65%,38% 5%,41% 80%,44% 20%,47% 90%,50% 10%,53% 85%,56% 15%,59% 75%,62% 5%,65% 70%,68% 0%,71% 65%,74% 5%,77% 80%,80% 20%,83% 90%,86% 10%,89% 85%,92% 30%,95% 100%,100% 100%,0 100%);
+  }
+
+  @keyframes letterReveal { from{opacity:0;transform:scale(.96) translateY(28px)} to{opacity:1;transform:scale(1) translateY(0)} }
+  .letter-anim { animation: letterReveal 1s .3s ease both; }
+
+  /* section underline */
+  .sec-line::after {
+    content:''; display:block; width:66px; height:3px;
+    background:#c9a227; margin:12px auto 0; border-radius:2px;
+  }
+</style>
+</head>
+
+<body class="bg-bg-dark font-lora text-cream">
+
+<!-- ═══════════════ HERO ═══════════════════════ -->
+<div class="relative min-h-screen flex flex-col items-center justify-center text-center px-5 py-20 overflow-hidden hero-bg">
+  <div class="absolute inset-0 pointer-events-none" id="starsContainer"></div>
+
+  <!-- Tag de día -->
+  <div class="fd0 inline-flex items-center gap-2 px-6 py-2 rounded-full mb-5 font-dancing text-white text-base tracking-widest shadow-lg"
+       style="background:linear-gradient(135deg,#c0392b,#e8c84a,#c0392b)">
+    ✨ Día del Padre ✨
+  </div>
+  <h1 class="fd2 font-playfair font-black text-gold-lt leading-[1.05] mb-3"
+      style="font-size:clamp(2.8rem,8vw,6rem);text-shadow:0 4px 30px rgba(201,162,39,.5),0 0 80px rgba(201,162,39,.15)">
+    Feliz Día,<br>Papito Vito
+  </h1>
+
+  <p class="fd3 font-dancing text-white mb-8"
+     style="font-size:clamp(1.6rem,5vw,2.8rem)">
+    Mi héroe de toda la vida
+  </p>
+
+  <div class="fd4 pulse-heart text-4xl select-none">❤️</div>
+
+  <div class="bounce-hint absolute bottom-7 left-1/2 flex flex-col items-center gap-1 text-gold opacity-60 text-xs tracking-[3px] uppercase pointer-events-none">
+    <span>Desplázate</span><span>▼</span>
+  </div>
+</div>
+
+
+<!-- ═══════════════ CAROUSEL ════════════════════ -->
+<div class="py-20" style="background:linear-gradient(180deg,#1a0f02,#250e00,#1a0f02)">
+  <div class="max-w-5xl mx-auto px-5">
+
+    <span class="font-dancing text-gold text-xl text-center block mb-2">Nuestros momentos juntos</span>
+    <h2 class="sec-line font-playfair font-bold text-gold-lt text-center mb-14"
+        style="font-size:clamp(1.9rem,5vw,3rem)">
+      Galería de Recuerdos
+    </h2>
+
+    <div class="relative overflow-hidden rounded-2xl" style="box-shadow:0 30px 80px rgba(0,0,0,.65)">
+      <div class="carousel-track" id="track">
+
+        <!-- Slide helper macro via repeated blocks -->
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/1.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"> Bailando la vida juntos en carnaval</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/2.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"> Aventuras juntos, siempre a tu lado</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/3.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"> Bailando la vida juntos en carnaval</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/4.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"> Crear Recuerdos conttigo siempre sera lo mejor</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/5.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"> Abrazados, como siempre debería ser</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/6.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">El primer día desde siempre, mi papá</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/7.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">Mi logro también es tuyo, papito</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/8.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">Los tres, siempre juntos</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/9.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">Momentos que guardo en el corazón</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/10.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">Instantes que no cambiaría por nada</p>
+          </div>
+        </div>
+
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/11.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)">Familia unida, el mayor tesoro</p>
+          </div>
+        </div>
+        <div class="carousel-slide" style="height:min(80vh,900px);max-height:900px;">
+          <img src="img/12.png" class="w-full h-full object-contain object-center" loading="lazy" alt="">
+          <div class="absolute inset-x-0 bottom-0 px-8 pb-6 pt-12" style="background:linear-gradient(transparent,rgba(18,6,0,.88))">
+            <p class="font-dancing text-gold-lt text-xl" style="text-shadow:0 2px 10px rgba(0,0,0,.9)"></p>
+          </div>
+        </div>
+
+      </div><!-- /track -->
+
+      <button onclick="move(-1)"
+        class="absolute left-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full flex items-center justify-center text-2xl text-gold-lt border-2 border-gold backdrop-blur-sm transition-all hover:scale-110 hover:bg-amber-900/50"
+        style="background:rgba(201,162,39,.18)">‹</button>
+      <button onclick="move(1)"
+        class="absolute right-3 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full flex items-center justify-center text-2xl text-gold-lt border-2 border-gold backdrop-blur-sm transition-all hover:scale-110 hover:bg-amber-900/50"
+        style="background:rgba(201,162,39,.18)">›</button>
+    </div>
+
+    <div class="flex justify-center gap-2.5 mt-5" id="dots"></div>
+  </div>
+</div>
+
+
+<!-- ═══════════════ CARDS ═══════════════════════ -->
+<section class="reveal max-w-5xl mx-auto px-5 py-20">
+
+  <span class="font-dancing text-gold text-xl text-center block mb-2">Lo que me has dado</span>
+  <h2 class="sec-line font-playfair font-bold text-gold-lt text-center mb-14"
+      style="font-size:clamp(1.9rem,5vw,3rem)">
+    Palabras desde mi alma
+  </h2>
+
+  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🦅</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi ejemplo de vida</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Papito Vito, tú me enseñaste que la vida se vive con dignidad y con el pecho en alto. Cada vez que te veo enfrentar los obstáculos, aprendo que rendirse no es una opción.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🤝</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi primer amigo</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Antes de tener amigos en el colegio, ya te tenía a ti. Caminabas a mi lado, escuchabas mis locuras, reías con mis chistes malos. Fuiste siempre mi compañero más fiel.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">💪</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi fortaleza</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">En los días grises, cuando el mundo parecía pesado, tu voz era la que me recordaba que soy capaz. Tu fe en mí vale más que cualquier trofeo que pueda ganar.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🎉</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi cómplice en la alegría</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Los carnavales con trajes que brillaban, los viajes juntos, las noches en que nos reímos hasta que dolía el estómago — esos momentos son míos para siempre y todos llevan tu firma.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🎓</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">El motor de mis logros</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Cuando recibí mi diploma, era tuyo también. Cada hora de estudio tuvo detrás tu sacrificio, tu apoyo silencioso, tus desvelos. Este camino lo recorrimos juntos, papito.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🌺</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi raíz más profunda</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Puedo crecer, volar, cambiar; pero siempre sabré dónde están mis raíces: en tu abrazo, en tu mirada orgullosa, en la seguridad que me da saber que estás ahí.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">⭐</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi estrella más brillante</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">En las noches oscuras te busco en el cielo, porque sé que eres la estrella que nunca se apaga, la que me guía a casa sin importar cuán lejos esté.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">🙏</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Gracias por tanto</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">Por las mañanas que madrugaste sin que yo lo viera, por las noches en que te quedaste despierto para que yo pudiera dormir tranquilo. Gracias por todo lo que das sin pedir nada a cambio.</p>
+    </div>
+
+    <div class="msg-card reveal relative overflow-hidden rounded-2xl p-8 text-center border border-amber-800/30"
+         style="background:linear-gradient(135deg,#2a1500 55%,#3d1f00)">
+      <div class="absolute -top-8 -right-8 w-28 h-28 rounded-full opacity-20 pointer-events-none"
+           style="background:radial-gradient(circle,#c9a227,transparent 70%)"></div>
+      <span class="text-4xl block mb-4">❤️‍🔥</span>
+      <p class="font-playfair font-bold text-gold-lt text-lg mb-3">Mi amor incondicional</p>
+      <p class="font-lora text-cream/75 text-sm leading-7">No siempre te lo digo, no siempre te lo demuestro como quisiera. Pero sépalo o no, ese amor está ahí, inmenso y silencioso, llenándolo todo por dentro.</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════ CARTA ═══════════════════════ -->
+<section class="reveal max-w-5xl mx-auto px-5 pb-28">
+
+  <span class="font-dancing text-gold text-xl text-center block mb-2">Directo del corazón</span>
+  <h2 class="sec-line font-playfair font-bold text-gold-lt text-center mb-14"
+      style="font-size:clamp(1.9rem,5vw,3rem)">
+    Una carta para ti
+  </h2>
+
+  <!-- Paper -->
+  <div class="letter-paper letter-anim relative max-w-2xl mx-auto rounded-sm"
+       style="color:#3b2507;box-shadow:0 0 0 8px #f0d060,0 0 0 11px #c9a227,0 40px 80px rgba(0,0,0,.65)">
+
+    <div class="relative z-10 px-8 py-14 sm:px-14">
+
+      <!-- Stamp decoration -->
+
+      <p class="font-lora italic text-soft-br text-sm text-right mb-8">Día del Padre, 2025</p>
+
+      <p class="font-dancing text-gold-dk mb-6" style="font-size:2rem">Querido Papito Vito,</p>
+
+      <div class="font-lora text-warm-br text-base leading-8 space-y-5">
+
+        <p>Sé que no soy de los que dice lo que siente con facilidad. Que a veces parece que estoy en mi mundo, que no me detengo lo suficiente a decirte las cosas que deberías escuchar más seguido. Pero hoy, con esta carta, quiero que sepas algo que cargo dentro de mí todos los días aunque no siempre lo muestre:</p>
+
+        <p><strong>Te amo, papito. Con todo lo que soy y todo lo que tengo.</strong></p>
+
+        <p>Sé que no siempre te lo digo. Que a veces me pongo serio o me quedo callado cuando debería hablar. Que hay días en que paso a tu lado sin abrazarte, sin decirte lo mucho que significas para mí. Pero quiero que sepas que ese silencio no es falta de amor es exactamente lo contrario. Es un amor tan grande que a veces no encuentro las palabras que alcancen para decirlo bien.</p>
+
+        <p>Recuerdo cuando era pequeño y tú ya eras mi mundo entero. No lo sabía nombrar entonces, pero lo sentía: contigo nada me daba miedo. Tu presencia era suficiente para que todo estuviera bien. Y aunque hayan pasado los años y yo haya crecido, esa sensación no ha cambiado.</p>
+
+        <p>Te vi trabajar callado, madrugar sin quejarte, hacer malabares para que a mí no me faltara nada. Y nunca, nunca te escuché pedir reconocimiento por eso. Hoy te lo doy, papito, con todo el corazón: <em>lo vi, lo agradezco, y lo llevo conmigo a donde vaya.</em></p>
+
+        <p>Hemos vivido cosas hermosas juntos. Los carnavales, las aventuras, los viajes, las noches de risa, los momentos serios, los días difíciles. En todos esos momentos estuviste. Y en los que no estuviste físicamente, de alguna forma también estabas, porque me enseñaste a enfrentarlos.</p>
+
+        <p>Cuando estuve en la graduación con ese diploma en la mano, lo primero que hice fue buscarte con los ojos. Y cuando te vi ahí, orgulloso, con esa mirada que dice más de lo que cualquier palabra podría expresar, supe que todo el esfuerzo había valido la pena. No solo el mío, sino el tuyo también.</p>
+
+        <p>Papito, a veces la vida pasa rápido y nos olvidamos de detenernos a decir lo que sentimos. Por eso hoy me detengo. Por eso hoy te escribo esto para que quede dicho, para que no quede solo en el aire, para que cuando lo leas sepas con certeza absoluta que:</p>
+
+        <p class="font-playfair font-bold text-gold-dk text-lg text-center py-3 leading-8">
+          Aunque no siempre te lo diga,<br>
+          ni te lo demuestre,<br>
+          te amo con todo el corazon papito<br>
+          Hoy y siempre.
+        </p>
+
+        <p>Eres el hombre que más admiro. El padre que más quiero. Y me siento el hijo más afortunado del mundo de tenerte.</p>
+
+        <p>Feliz Día del Padre, papito Vito. Que este día sea tan especial como tú eres para mí cada día del año.</p>
+
+      </div>
+
+      <p class="font-dancing text-gold-dk mt-10 text-right leading-snug" style="font-size:1.8rem">
+        Con todo mi amor,Marito<br>
+        <span style="font-size:1.5rem">FELIZ DIA DEL PADRE AL MEJOR DE TODOS, Gracias por tus enseñanzas y apoyo en todo</span> <br>
+        <span style="font-size:1.5rem">Te Quiero mucho Papá</span>
+      </p>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════ FOOTER ══════════════════════ -->
+<footer class="text-center py-10 px-5 border-t border-amber-900/25" style="background:#100800">
+  <div class="text-3xl mb-3 inline-block pulse-heart select-none"></div>
+  <p class="font-dancing text-gold text-2xl mb-1">Feliz Día del Padre, Papito Vito</p>
+  <p class="text-cream/25 text-xs tracking-widest uppercase">Con amor infinito · Siempre</p>
+</footer>
+
+
+<script>
+  /* Stars */
+  const sc = document.getElementById('starsContainer');
+  for (let i = 0; i < 90; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random()*3+1;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${(Math.random()*3+2).toFixed(1)}s;--delay:${(Math.random()*4).toFixed(1)}s`;
+    sc.appendChild(s);
+  }
+
+  /* Carousel */
+  const track=document.getElementById('track'), total=track.children.length;
+  let cur=0, timer;
+  const dotsEl=document.getElementById('dots');
+
+  for(let i=0;i<total;i++){
+    const d=document.createElement('button');
+    d.className=`w-2.5 h-2.5 rounded-full border border-amber-500 transition-all duration-300 ${i===0?'scale-125':'opacity-50'}`;
+    d.style.background = i===0 ? '#c9a227' : 'rgba(120,60,0,.4)';
+    d.onclick=()=>goTo(i);
+    dotsEl.appendChild(d);
+  }
+
+  function goTo(n){
+    cur=(n+total)%total;
+    track.style.transform=`translateX(-${cur*100}%)`;
+    dotsEl.querySelectorAll('button').forEach((d,i)=>{
+      d.style.background = i===cur ? '#c9a227' : 'rgba(120,60,0,.4)';
+      d.className=`w-2.5 h-2.5 rounded-full border border-amber-500 transition-all duration-300 ${i===cur?'scale-125':'opacity-50'}`;
+    });
+  }
+  function move(dir){clearInterval(timer);goTo(cur+dir);startAuto();}
+  function startAuto(){timer=setInterval(()=>goTo(cur+1),4500);}
+  startAuto();
+
+  let tx=null;
+  track.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
+  track.addEventListener('touchend',e=>{
+    if(tx===null)return;
+    const dx=e.changedTouches[0].clientX-tx;
+    if(Math.abs(dx)>40)move(dx<0?1:-1);
+    tx=null;
+  });
+
+  /* Scroll reveal */
+  const io=new IntersectionObserver(entries=>entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}
+  }),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
